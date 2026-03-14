@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+    <head>
+        <title>MFU</title>
+    </head>
+
+    <body>
+        <h2>Music For U</h2>
+        <input id="playlistUrl" placeholder="Paste YTs playlist URL here" />
+        <button onclick="start()" id="play">Play</button>
+        <div id="player"></div>
+        <div id="playlist"></div>
+        <script src="https://www.youtube.com/iframe_api"></script>
+        <script src="app.js"></script>
+    </body>
+
+    <!--cssss-->
+    <style>
+        body {
+            font-family: Arial;
+            background: #111;
+            color: white;
+            text-align: center;
+            padding: 40px;
+        }
+
+        input {
+            width: 60%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        #player {
+            margin-top: 30px;
+        }
+        #playlist {
+            margin-top: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+        .video {
+            padding: 8px;
+            border-bottom: 1px solid #333;
+            cursor: pointer;
+        }
+        .video:hover {
+            background: #222;
+        }
+    </style>
+</html>
