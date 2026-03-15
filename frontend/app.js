@@ -81,7 +81,10 @@ async function initPlayer() {
       origin: window.location.origin,
     },
     events: {
-      onReady: () => console.log("Player ready"),
+      onReady: () => {
+        console.log("Player ready");
+        playerReady = true;
+          },
     },
   });
 }
