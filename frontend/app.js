@@ -1,4 +1,5 @@
 let player;
+let playerReady;
 let videos = [];
 let currentIndex = 0;
 
@@ -21,9 +22,30 @@ function fetchmusic() {
       }));
 
       currentIndex = 0;
-      player.loadVideoById(videos[currentIndex].id);
+      if (playerReady) {
+        player.loadVideoById(videos[currentIndex].id);
+      } else {
+        console.log("wait a minuate. Player not ready yet");
+      }
     })
     .catch((err) => console.log(err));
+}
+
+function loadYouTubeAPI() {
+  return new Promise((resolve) => {
+    if (window.YT && window.YT.Player) {
+      resolve();
+      return;
+    }
+
+    window.onYouTubeIframeAPIReady = () => {
+      resolve();
+    };
+
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+  });
 }
 
 function start() {
@@ -31,16 +53,40 @@ function start() {
   fetchmusic();
 }
 
-function onYouTubeIframeAPIReady() {
+window.onYouTubeIframeAPIReady = function () {
   player = new YT.Player("player", {
     height: "390",
     width: "640",
     videoId: "",
+    playerVars: {
+      origin: window.location.origin,
+    },
     events: {
+      onReady: () => {
+        playerReady = true;
+        console.log("Player ready");
+      },
       onStateChange: onPlayerStateChange,
     },
   });
+};
+
+async function initPlayer() {
+  await loadYouTubeAPI();
+
+  player = new YT.Player("player", {
+    height: "390",
+    width: "640",
+    playerVars: {
+      origin: window.location.origin,
+    },
+    events: {
+      onReady: () => console.log("Player ready"),
+    },
+  });
 }
+
+initPlayer();
 
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.ENDED) {
