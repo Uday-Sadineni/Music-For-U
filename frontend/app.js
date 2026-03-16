@@ -85,6 +85,7 @@ async function initPlayer() {
         console.log("Player ready");
         playerReady = true;
           },
+      onStateChange: onPlayerStateChange,
     },
   });
 }
